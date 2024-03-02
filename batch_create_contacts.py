@@ -7,7 +7,9 @@ python batch_create_contacts.py <alias> <csv with a "contact" column with all th
 """
 import argparse
 import collections
+import json
 import os
+import pathlib
 import re
 import pprint
 from typing import Dict, List, Optional
@@ -103,7 +105,9 @@ if __name__ == '__main__':
     print('Here are your reverse aliases')
     pp.pprint(reverse_aliases)
 
-    print('I also put them in this file: tmp/reverse_aliases.csv')
+    pathlib.Path('./tmp').mkdir(exist_ok=True)
+
+    print('I\'ll also put them in this file: tmp/reverse_aliases.csv')
     reverse_aliases_df = pd.DataFrame.from_dict(reverse_aliases, orient='index').reset_index()
     reverse_aliases_df.columns = ['contact', 'alias']
     reverse_aliases_df.to_csv('tmp/reverse_aliases.csv', index=False)
